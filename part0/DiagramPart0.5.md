@@ -17,6 +17,8 @@ sequenceDiagram
     server-->>browser: the JavaScript file
     deactivate server
 
-    
+    Note right of browser: Przegladarka zaczyna wykonywac kod JavaScript, ktory pobiera dane JSON z serwera
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp.json    
 
     Note right of browser: Przegladarka wykonuje funkcje zwrotna (callback), ktora renderuje notatki
+
