@@ -1,37 +1,37 @@
 sequenceDiagram
-    participant browser
+    participant przegladarka
     participant server
-Note right of browser: Uzytkownik wpisuje notke i klika 'Save' 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/new_note
+Note right of przegladarka: Uzytkownik wpisuje notke i klika 'Save' 
+ przegladarka->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
     activate server
-    Note right of browser: Wysyla wpisana notke (czyli, content=67)
-    server-->>browser: odpowiedz przekierowania (302) HTTP do /notes
+    Note right of przegladarka: Wysyla wpisana notke (czyli, content=67)
+    server--> przegladarka: odpowiedz przekierowania {"message":"note created"} (302) HTTP do /notes
     deactivate server
 
-   Note right of browser: Przegladarka odswieza sie
+   Note right of przegladarka: Przegladarka odswieza sie
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+ przegladarka->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
     activate server
-    server-->>browser: HTML document
+    server--> przegladarka: dokument HTML
     deactivate server
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+ przegladarka->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
     activate server
-    server-->>browser: the css file
+    server--> przegladarka: Plik CSS
     deactivate server
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
+ przegladarka->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.js
     activate server
-    server-->>browser: the JavaScript file
+    server--> przegladarka: Plik Javascript
     deactivate server
 
-    Note right of browser: Przegladarka zaczyna wykonywac kod JavaScript, ktory pobiera dane JSON z serwera
+    Note right of przegladarka: Przegladarka zaczyna wykonywac kod JavaScript, ktory pobiera dane JSON z serwera
 
-    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
+ przegladarka->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
     activate server
-    server-->>browser:  [{ "content": "67", "date": "2025-10-16" }, ... ]
+    server--> przegladarka:  Plik JSON wyswietla wszystkie wiadomosci wraz z nowa
     deactivate server
 
-    Note right of browser: Przegladarka wykonuje funkcje zwrotna (callback), ktora renderuje notatki aktualizujac je
+    Note right of przegladarka: Przegladarka wykonuje funkcje zwrotna, ktora renderuje notatki aktualizujac je
 
     
