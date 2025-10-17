@@ -5,7 +5,7 @@ Note right of przegladarka: Uzytkownik wpisuje notke i klika 'Save'
  przegladarka->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
     activate server
     Note right of przegladarka: Wysyla wpisana notke (czyli, content=67)
-    server--> przegladarka: odpowiedz przekierowania {"message":"note created"} (302) HTTP do /notes
+    server--> przegladarka: odpowiedz przekierowania (302) HTTP do /notes
     deactivate server
 
    Note right of przegladarka: Przegladarka odswieza sie
