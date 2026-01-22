@@ -15,11 +15,11 @@ const App = () => {
     const phoneExists = persons.some(person => person.phone === newPhone)
 
     if (nameExists) {
-      alert(`user ${newName} already exists in the phonebook`)
+      alert(`${newName} is already added to phonebook`)
       return
     }
     if (phoneExists) {
-      alert(`number ${newPhone} already exists in the phonebook`)
+      alert(`number ${newPhone} is already added to phonebook`)
       return
     }
 
@@ -40,7 +40,7 @@ const App = () => {
           />
         </div>
         <div>
-          Phone Number: 
+          number: 
           <input 
             value={newPhone} 
             onChange={(e) => setNewPhone(e.target.value)} 
@@ -57,7 +57,7 @@ const App = () => {
       
       <ul>
         {persons.map(person => 
-          <li key={person.name}>{person.name} - {person.phone}</li>
+          <li key={`${person.name}-${person.phone}`}>{person.name} - {person.phone}</li>
         )}
       </ul>
     </div>
