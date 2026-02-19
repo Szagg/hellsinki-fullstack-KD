@@ -1,4 +1,14 @@
 {
-  "semi": false,
-  "singleQuote": true,
+  "exclude": ["src/**/*.test.ts"],
+  "compilerOptions": {
+    "outDir": "./lib",
+    "target": "esnext",
+    "module": "nodenext",
+    "skipLibCheck": true,
+    "strict": true,
+    "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true
+  }
 }

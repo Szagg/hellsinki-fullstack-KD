@@ -1,7 +1,10 @@
-**/*.log
-.DS_Store
-.idea
-lib
-node_modules
-public/output.css
-tmp
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": {
+    "oneOf": [
+      { "type": "array" },
+      { "type": "object" }
+    ]
+  }
+}
