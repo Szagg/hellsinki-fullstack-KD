@@ -1,6 +1,5 @@
 import { useState } from 'react'
-
-
+import axios from 'axios'
 
 const addPerson = event => {
   event.preventDefault()
@@ -71,9 +70,18 @@ const App = () => {
       alert(`number ${newPhone} is already added to phonebook`)
       return
     }
-    setPersons(persons.concat({ name: newName, phone: newPhone }))
-    setNewName('')
-    setNewPhone('')
+    
+    const newPerson = { name: newName, phone: newPhone }
+    axios
+      .post('http://localhost:3001/persons', newPerson)
+      .then(response => {
+        setPersons(persons.concat(response.data))
+        setNewName('')
+        setNewPhone('')
+      })
+      .catch(error => {
+        console.error('Error adding person:', error)
+      })
   }
 
   const personsToShow = persons.filter(person =>
