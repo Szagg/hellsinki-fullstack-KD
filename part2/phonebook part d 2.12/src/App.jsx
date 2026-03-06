@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Filter from './Filter'
+import PersonForm from './PersonForm'
+import Persons from './Persons'
+ 
 
 
 
@@ -29,9 +33,20 @@ const App = () => {
       alert(`number ${newPhone} is already added to phonebook`)
       return
     }
-    setPersons(persons.concat({ name: newName, phone: newPhone }))
-    setNewName('')
-    setNewPhone('')
+
+    const newPerson = { name: newName, phone: newPhone }
+
+    axios
+      .post('http://localhost:3001/persons', newPerson)
+      .then(response => {
+        setPersons(prev => prev.concat(response.data))
+        setNewName('')
+        setNewPhone('')
+      })
+      .catch(error => {
+        console.error('Failed to save person:', error)
+        alert('Failed to save person to server')
+      })
   }
 
   const personsToShow = persons.filter(person =>
