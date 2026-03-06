@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import personService from './services/persons'
 import Filter from './Filter'
 import PersonForm from './PersonForm'
 import Persons from './Persons'
@@ -13,10 +13,10 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }, [])
 
@@ -32,9 +32,20 @@ const App = () => {
       alert(`number ${newPhone} is already added to phonebook`)
       return
     }
-    setPersons(persons.concat({ name: newName, phone: newPhone }))
-    setNewName('')
-    setNewPhone('')
+
+    const newPerson = { name: newName, phone: newPhone }
+
+    personService
+      .create(newPerson)
+      .then(returnedPerson => {
+        setPersons(prev => prev.concat(returnedPerson))
+        setNewName('')
+        setNewPhone('')
+      })
+      .catch(error => {
+        console.error('Failed to save person:', error)
+        alert('Failed to save person to server')
+      })
   }
 
   const personsToShow = persons.filter(person =>
