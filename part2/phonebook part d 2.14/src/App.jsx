@@ -42,10 +42,7 @@ const App = () => {
         setNewName('')
         setNewNumber('')
       })
-      .catch(error => {
-        console.error('Failed to save person:', error)
-        alert('Failed to save person to server')
-      })
+      
   }
 
   const handleDeletePerson = (id) => {
@@ -56,10 +53,7 @@ const App = () => {
         .then(() => {
           setPersons(prev => prev.filter(p => p.id !== id))
         })
-        .catch(error => {
-          console.error('Failed to delete person:', error)
-          alert('Failed to delete person from server')
-        })
+      
     }
   }
 
