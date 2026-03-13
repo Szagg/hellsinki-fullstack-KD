@@ -7,9 +7,8 @@ import Persons from './Persons'
 
 
 const App = () => {
-  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
-  const [newPhone, setNewPhone] = useState('')
+  const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
 
   useEffect(() => {
@@ -23,24 +22,24 @@ const App = () => {
   const handleAddPerson = (event) => {
     event.preventDefault()
     const nameExists = persons.some(person => person.name === newName)
-    const phoneExists = persons.some(person => person.phone === newPhone)
+    const numberExists = persons.some(person => person.number === newNumber)
     if (nameExists) {
       alert(`${newName} is already added to phonebook`)
       return
     }
-    if (phoneExists) {
-      alert(`number ${newPhone} is already added to phonebook`)
+    if (numberExists) {
+      alert(`number ${newNumber} is already added to phonebook`)
       return
     }
 
-    const newPerson = { name: newName, phone: newPhone }
+    const newPerson = { name: newName, number: newNumber }
 
     personService
       .create(newPerson)
       .then(returnedPerson => {
         setPersons(prev => prev.concat(returnedPerson))
         setNewName('')
-        setNewPhone('')
+        setNewNumber('')
       })
       .catch(error => {
         console.error('Failed to save person:', error)
@@ -76,8 +75,8 @@ const App = () => {
         onSubmit={handleAddPerson}
         newName={newName}
         onNameChange={e => setNewName(e.target.value)}
-        newPhone={newPhone}
-        onPhoneChange={e => setNewPhone(e.target.value)}
+        newNumber={newNumber}
+        onNumberChange={e => setNewNumber(e.target.value)}
       />
       <h3>Numbers</h3>
       <Persons persons={personsToShow} onDelete={handleDeletePerson} />

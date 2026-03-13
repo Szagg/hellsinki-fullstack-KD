@@ -22,30 +22,42 @@ const App = () => {
 
   const handleAddPerson = (event) => {
     event.preventDefault()
-    const nameExists = persons.some(person => person.name === newName)
-    const numberExists = persons.some(person => person.number === newNumber)
-    if (nameExists) {
-      alert(`${newName} is already added to phonebook`)
-      return
-    }
+    const existingPerson = persons.find(person => person.name === newName)
+    const numberExists = persons.some(person => person.number === newNumber && person.id !== existingPerson?.id)
     if (numberExists) {
       alert(`number ${newNumber} is already added to phonebook`)
       return
     }
 
-    const newPerson = { name: newName, number: newNumber }
-
-    personService
-      .create(newPerson)
-      .then(returnedPerson => {
-        setPersons(prev => prev.concat(returnedPerson))
-        setNewName('')
-        setNewNumber('')
-      })
-      .catch(error => {
-        console.error('Failed to save person:', error)
-        alert('Failed to save person to server')
-      })
+    if (existingPerson) {
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        const updatedPerson = { ...existingPerson, number: newNumber }
+        personService
+          .update(existingPerson.id, updatedPerson)
+          .then(returnedPerson => {
+            setPersons(prev => prev.map(p => p.id !== existingPerson.id ? p : returnedPerson))
+            setNewName('')
+            setNewNumber('')
+          })
+          .catch(error => {
+            console.error('Failed to update person:', error)
+            alert('Failed to update person on server')
+          })
+      }
+    } else {
+      const newPerson = { name: newName, number: newNumber }
+      personService
+        .create(newPerson)
+        .then(returnedPerson => {
+          setPersons(prev => prev.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+        .catch(error => {
+          console.error('Failed to save person:', error)
+          alert('Failed to save person to server')
+        })
+    }
   }
 
   const handleDeletePerson = (id) => {
