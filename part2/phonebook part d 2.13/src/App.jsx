@@ -48,6 +48,21 @@ const App = () => {
       })
   }
 
+  const handleDeletePerson = (id) => {
+    const person = persons.find(p => p.id === id)
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personService
+        .remove(id)
+        .then(() => {
+          setPersons(prev => prev.filter(p => p.id !== id))
+        })
+        .catch(error => {
+          console.error('Failed to delete person:', error)
+          alert('Failed to delete person from server')
+        })
+    }
+  }
+
   const personsToShow = persons.filter(person =>
     person.name.toLowerCase().includes(filter.toLowerCase())
   )
@@ -65,7 +80,7 @@ const App = () => {
         onPhoneChange={e => setNewPhone(e.target.value)}
       />
       <h3>Numbers</h3>
-      <Persons persons={personsToShow} />
+      <Persons persons={personsToShow} onDelete={handleDeletePerson} />
     </div>
   )
 }
