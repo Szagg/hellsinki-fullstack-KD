@@ -20,40 +20,55 @@ const App = () => {
       })
   }, [])
 
-  const handleAddPerson = (event) => {
+
+
+
+ //dodawanie 
+      const handleAddPerson = (event) => {
     event.preventDefault()
-    const nameExists = persons.some(person => person.name === newName)
-    const numberExists = persons.some(person => person.number === newNumber)
-    if (nameExists) {
-      alert(`${newName} is already added to phonebook`)
-      return
-    }
+    const existingPerson = persons.find(person => person.name === newName)
+    const numberExists = persons.some(person => person.number === newNumber && person.id !== existingPerson?.id)
     if (numberExists) {
       alert(`number ${newNumber} is already added to phonebook`)
       return
     }
 
-    const newPerson = { name: newName, number: newNumber }
+    if (existingPerson) {
+          if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        const updatedPerson = { ...existingPerson, number: newNumber }
+        personService
+          .update(existingPerson.id, updatedPerson)
+          .then(returnedPerson => {
 
-    personService
-      .create(newPerson)
-      .then(returnedPerson => {
-        setPersons(prev => prev.concat(returnedPerson))
-        setNewName('')
-        setNewNumber('')
-      })
-      
+            setPersons(prev => prev.map(p => p.id !== existingPerson.id ? p : returnedPerson))
+            setNewName('')
+            setNewNumber('')
+          })
+      }
+    } else {
+      const newPerson = { name: newName, number: newNumber }
+      personService
+        .create(newPerson)
+        .then(returnedPerson => {
+
+
+            setPersons(prev => prev.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+       
+    }
   }
-
+ //usuwanie
   const handleDeletePerson = (id) => {
+    
     const person = persons.find(p => p.id === id)
     if (window.confirm(`Delete ${person.name}?`)) {
       personService
         .remove(id)
         .then(() => {
-          setPersons(prev => prev.filter(p => p.id !== id))
+           setPersons(prev => prev.filter(p => p.id !== id))
         })
-      
     }
   }
 
