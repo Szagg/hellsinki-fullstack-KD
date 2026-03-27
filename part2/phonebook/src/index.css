@@ -1,0 +1,68 @@
+
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0 1rem;
+}
+
+.notification {
+  border: 2px solid #4caf50;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.notification.error {
+  border-color: #f44336;
+  background: #ffebee;
+  color: #c62828;
+}
+
+.person-form div {
+  margin-bottom: 0.5rem;
+}
+
+.person-form label {
+  display: inline-block;
+  width: 70px;
+}
+
+.persons-list {
+  list-style: none;
+  padding: 0;
+}
+
+.person-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.person-name {
+  font-weight: 600;
+  min-width: 150px;
+}
+
+.delete-btn {
+  margin-left: auto;
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  opacity: 0.9;
+}
+
+.filter {
+  margin-bottom: 1rem;
+}
+/* ...existing code... */
