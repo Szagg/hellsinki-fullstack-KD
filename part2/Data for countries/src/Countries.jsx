@@ -3,7 +3,7 @@ const Countries = ({ countries, selectCountry }) => {
     <div key={country.name.common}>
       <p>
         {country.name.common}
-        <button onClick={() => selectCountry(country)}>show</button>
+        <button onClick={() => selectCountry(country)}> show</button>
       </p>
     </div>
   ));
