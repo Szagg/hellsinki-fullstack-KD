@@ -1,13 +1,14 @@
 import React from "react";
+import Weather from "./Weather";
 
 const Country = ({ country }) => {
   const name = country.name?.common || country.name;
   const capital = Array.isArray(country.capital) ? country.capital[0] : country.capital;
   const languages = country.languages ? Object.values(country.languages) : [];
-  // prefer capital coordinates, fall back to country center
-  const latlng = country.capitalInfo?.latlng || country.latlng;
-  const lat = latlng?.[0];
-  const lon = latlng?.[1];
+ 
+  const coordinates = country.capitalInfo?.latlng || country.latlng;
+  const latitude = coordinates?.[0];
+  const longitude = coordinates?.[1];
 
   return (
     <div>
@@ -30,7 +31,7 @@ const Country = ({ country }) => {
         />
       )}
 
-     
+      <Weather capital={capital} latitude={latitude} longitude={longitude} />
     </div>
   );
 };
