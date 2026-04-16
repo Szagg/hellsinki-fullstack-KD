@@ -5,12 +5,14 @@ import CountryFilter from "./CountryFilter";
 import Content from "./Content";
 
 const App = () => {
+  // tekst filtra UI i listy wyników krajów
   const [filter, setFilter] = useState("");
   const [allCountries, setAllCountries] = useState([]);
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    // załadowywanie danych krajów raz przy starcie aplikacji
     getAllCountries()
       .then((allCountries) => {
         setAllCountries(allCountries);

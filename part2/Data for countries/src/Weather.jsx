@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import getWeather from "./services/weather";
 
 const Weather = ({ capital, latitude, longitude }) => {
+  // obiekt pogody zwrócony z API OpenWeather
   const [weather, setWeather] = useState(null);
 
   useEffect(() => {
     if (!capital || latitude == null || longitude == null) return;
 
+    // pobierz pogodę raz gdy współrzędne są dostępne
     getWeather({ latitude, longitude }).then(setWeather).catch(() => setWeather(null));
   }, [capital, latitude, longitude]);
 
@@ -21,7 +23,6 @@ const Weather = ({ capital, latitude, longitude }) => {
       {icon && (
         <img
           src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
-          alt={weather.weather?.[0]?.description || "weather icon"}
           width={100}
         />
       )}

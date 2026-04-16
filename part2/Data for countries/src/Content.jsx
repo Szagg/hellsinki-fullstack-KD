@@ -1,6 +1,7 @@
 import Countries from "./Countries";
 import Country from "./Country";
 
+// decyduje, co wyswietlic na podstawie liczby wyników filtrowania krajow
 const Content = ({ countries, selectCountry }) => {
   if (countries.length > 10) {
     return <p>Too many matches, specify another filter {countries.length}</p>;

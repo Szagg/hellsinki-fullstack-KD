@@ -2,6 +2,7 @@ const apiKey = import.meta.env.VITE_SOME_KEY;
 const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
 const getWeather = async ({ latitude, longitude }) => {
+  // żądanie pogody dla podanych współrzędnych
   if (!apiKey) return null;
 
   const response = await fetch(

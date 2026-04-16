@@ -2,10 +2,12 @@ import React from "react";
 import Weather from "./Weather";
 
 const Country = ({ country }) => {
+  // pola kraju z API REST Countries
   const name = country.name?.common || country.name;
   const capital = Array.isArray(country.capital) ? country.capital[0] : country.capital;
   const languages = country.languages ? Object.values(country.languages) : [];
  
+  // użyj współrzędnych stolicy jeśli dostępne, inaczej użyj centrum kraju
   const coordinates = country.capitalInfo?.latlng || country.latlng;
   const latitude = coordinates?.[0];
   const longitude = coordinates?.[1];
@@ -31,6 +33,7 @@ const Country = ({ country }) => {
         />
       )}
 
+   
       <Weather capital={capital} latitude={latitude} longitude={longitude} />
     </div>
   );
