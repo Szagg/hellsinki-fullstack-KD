@@ -16,7 +16,11 @@ const data = JSON.parse(await fs.readFile(dataFile, 'utf8'))
 let persons = Array.isArray(data.persons) ? data.persons : []
 
 const generateId = () => {
-  return Math.floor(Math.random() * 1000000).toString()
+  return Math.floor(Math.random() * 1000000000000).toString()
+}
+
+const saveData = async () => {
+  await fs.writeFile(dataFile, JSON.stringify({ persons }, null, 2))
 }
 
 app.get(['/api/persons', '/persons'], (request, response) => {
@@ -34,9 +38,10 @@ app.get(['/api/persons/:id', '/persons/:id'], (request, response) => {
   }
 })
 
-app.delete(['/api/persons/:id', '/persons/:id'], (request, response) => {
+app.delete(['/api/persons/:id', '/persons/:id'], async (request, response) => {
   const id = request.params.id
   persons = persons.filter((person) => person.id !== id)
+  await saveData()
   response.status(204).end()
 })
 
@@ -62,10 +67,11 @@ app.post(['/api/persons', '/persons'], (request, response) => {
   }
 
   persons = persons.concat(person)
+  await saveData()
   response.json(person)
 })
 
-app.put(['/api/persons/:id', '/persons/:id'], (request, response) => {
+app.put(['/api/persons/:id', '/persons/:id'], async (request, response) => {
   const id = request.params.id
   const body = request.body
 
@@ -90,6 +96,7 @@ app.put(['/api/persons/:id', '/persons/:id'], (request, response) => {
   }
 
   persons = persons.map((person) => (person.id === id ? updatedPerson : person))
+  await saveData()
   response.json(updatedPerson)
 })
 
@@ -108,3 +115,7 @@ const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
+curl -X POST http://localhost:3001/api/persons \
+  -H "Content-Type: application/json" \
+  -d '{"name": "Test Person", "number": "123-456-7890"}'
