@@ -116,6 +116,4 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
 
-curl -X POST http://localhost:3001/api/persons \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Test Person", "number": "123-456-7890"}'
+//.
