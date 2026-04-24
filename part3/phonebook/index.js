@@ -9,8 +9,23 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 console.log(__dirname)
 
+
+
+
+
+
+
 ;(async () => {
   const app = express()
+
+
+morgan.token('body', (req) => JSON.stringify(req.body))
+
+
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms :body')
+)
+
 
   app.use(cors())
   app.use(express.json())
@@ -19,6 +34,9 @@ console.log(__dirname)
   const dataFile = path.join(__dirname, 'db.json')
   const data = JSON.parse(await fs.readFile(dataFile, 'utf8'))
   let persons = Array.isArray(data.persons) ? data.persons : []
+
+
+
 
   const generateId = () => {
     return Math.floor(Math.random() * 1000000000000).toString()
