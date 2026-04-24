@@ -28,10 +28,12 @@ console.log(__dirname)
     await fs.writeFile(dataFile, JSON.stringify({ persons }, null, 2))
   }
 
+  
   app.get(['/api/persons', '/persons'], (request, response) => {
     response.json(persons)
   })
 
+  
   app.get(['/api/persons/:id', '/persons/:id'], (request, response) => {
     const id = request.params.id
     const person = persons.find((person) => person.id === id)
@@ -45,11 +47,12 @@ console.log(__dirname)
 
   app.delete(['/api/persons/:id', '/persons/:id'], async (request, response) => {
     const id = request.params.id
-    persons = persons.filter((person) => person.id !== id)
+    const person = persons.find((person) => person.id.toString() === id.toString())
     await saveData()
     response.status(204).end()
   })
 
+  
   app.post(['/api/persons', '/persons'], async (request, response) => { 
     const body = request.body
 
@@ -76,6 +79,7 @@ console.log(__dirname)
     response.json(person)
   })
 
+ 
   app.put(['/api/persons/:id', '/persons/:id'], async (request, response) => {
     const id = request.params.id
     const body = request.body
@@ -111,6 +115,7 @@ console.log(__dirname)
       `<p>Phonebook has info for ${persons.length} people</p><p>${date}</p>`
     )
   })
+
 
   app.use((request, response) => {
     response.status(404).json({ error: 'unknown endpoint' })
