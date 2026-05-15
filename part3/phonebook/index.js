@@ -65,7 +65,7 @@ app.use(
 
   app.delete(['/api/persons/:id', '/persons/:id'], async (request, response) => {
     const id = request.params.id
-    const person = persons.find((person) => person.id.toString() === id.toString())
+    persons = persons.filter((person) => person.id.toString() !== id.toString()) 
     await saveData()
     response.status(204).end()
   })
