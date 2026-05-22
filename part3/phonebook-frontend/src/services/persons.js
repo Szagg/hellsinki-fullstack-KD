@@ -1,5 +1,4 @@
 import axios from 'axios'
-// Set your backend API URL here
 const baseUrl = import.meta.env.VITE_API_URL || '/api/persons'
 
 const getAll = () => {
