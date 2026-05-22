@@ -1,1 +1,3 @@
-// ...frontend entry point, will use main.jsx and src/ from original...
+import ReactDOM from 'react-dom/client'
+import App from './App'
+ReactDOM.createRoot(document.getElementById('root')).render(<App />)
