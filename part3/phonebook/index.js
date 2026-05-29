@@ -72,31 +72,28 @@ app.use(
   })
 
   
-  app.post(['/api/persons', '/persons'], async (request, response) => { 
-    const body = request.body
+  app.post(['/api/persons', '/persons'], async (request, response) => {
+  const body = request.body
 
-    if (!body.name) {
-      return response.status(400).json({ error: 'name missing' })
-    }
+  if (!body.name || !body.number) {
+    return response.status(400).json({ error: 'name or number missing' })
+  }
 
-    if (!body.number) {
-      return response.status(400).json({ error: 'number missing' })
-    }
+  if (persons.some(person => person.name === body.name)) {
+    return response.status(400).json({ error: 'name must be unique' })
+  }
 
-    if (persons.some((person) => person.name === body.name)) {
-      return response.status(400).json({ error: 'name must be unique' })
-    }
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: generateId(),
+  }
 
-    const person = {
-      id: generateId(),
-      name: body.name,
-      number: body.number,
-    }
+  persons.push(person)
+  await saveData() 
 
-    persons = persons.concat(person)
-    await saveData()
-    response.json(person)
-  })
+  response.json(person)
+})
 
  
   app.put(['/api/persons/:id', '/persons/:id'], async (request, response) => {
