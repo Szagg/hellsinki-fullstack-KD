@@ -18,6 +18,7 @@ console.log(__dirname)
 ;(async () => {
   const app = express()
 
+app.use(express.static('dist')) // <-- add this line
 
 morgan.token('body', (req) => JSON.stringify(req.body))
 

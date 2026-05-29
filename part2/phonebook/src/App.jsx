@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react'
 import personService from './services/persons'
 import Filter from './Filter'
@@ -6,6 +5,8 @@ import PersonForm from './PersonForm'
 import Persons from './Persons'
 import Notification from './Notification'
 import './index.css'
+
+const baseUrl = '/api/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -102,4 +103,4 @@ const App = () => {
 }
 
 export default App
-//.
+//
